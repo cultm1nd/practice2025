@@ -1,0 +1,52 @@
+@extends('layouts.header')
+@section('content')
+<div class="container mt-4">
+    <h2>Панель администратора</h2>
+
+    <div class="table-responsive mt-3">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Клиент</th>
+                    <th>Услуга</th>
+                    <th>Дата</th>
+                    <th>Статус</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($orders as $order)
+                <tr>
+                    <td>{{ $order->id }}</td>
+                    <td>{{ $order->user->surname }} {{ $order->user->name }}</td>
+                    <td>{{ $order->service->title }}</td>
+                    <td>{{ $order->date }} {{ $order->time }}</td>
+                    <td>@if ($order->status != null)
+                        {{ $order->status->title}}
+                        @endif
+                    </td>
+                    <td>
+                        <form method="POST" action="{{ route('admin.update-status', $order->id) }}">
+                            @csrf
+                            @method('PUT')
+                            <select name="status_id" class="form-select form-select-sm">
+                                @foreach($statuses as $status)
+                                <option value="{{ $status->id }}" {{ $order->id_status == $status->id ? 'selected' : '' }}>
+                                    {{ $status->title }}
+                                </option>
+                                @endforeach
+                            </select>
+                            @if($order->id_status == 3)
+                            <input type="text" name="cancel_reason" value="{{ $order->desc }}" class="form-control form-control-sm mt-1" placeholder="Причина отмены">
+                            @endif
+                            <button type="submit" class="btn btn-sm btn-primary mt-1">Сохранить</button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+@endsection
