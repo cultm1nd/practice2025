@@ -1,3 +1,4 @@
+https://disk.yandex.ru/d/h5v2ex4gox2m_Q/Очное%20отделение/4%2C%205%20курс/ИСИП-401/ШАБЛОН%20и%20ПРИМЕР%20расчета%20эк.части%20ДП
 @extends('layouts.header')
 @section('content')
 <div class="container mt-4">
